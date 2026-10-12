@@ -1,0 +1,31 @@
+# Sample configuration: tiny files in data/sample/ for a pipeline smoke test
+project:
+  name: kuairand-exposure-completion
+  mode: sample
+
+data:
+  activity_log: data/sample/activity_sample.csv
+  personalized_log: data/sample/personalized_sample.csv
+  random_log: data/sample/random_sample.csv
+
+columns:
+  user_id: user_id
+  video_id: video_id
+  play_time_ms: play_time_ms
+  duration_ms: duration_ms
+  tab: tab
+  is_rand: is_rand
+
+analysis:
+  completion_threshold: 0.9
+  robustness_threshold: 1.0
+  alpha: 0.05
+  cluster_by: user_id
+
+guardrails:
+  min_obs_per_group: 1          # lowered: sample has only a few rows
+  max_missing_share: 1.0        # lowered: sample is only checked for running
+
+output:
+  dir: outputs
+  log_file: outputs/run_sample.log

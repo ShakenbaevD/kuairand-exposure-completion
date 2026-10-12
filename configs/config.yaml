@@ -1,0 +1,32 @@
+# Main configuration: real KuaiRand-1K data
+project:
+  name: kuairand-exposure-completion
+  mode: full
+
+data:
+  # Download KuaiRand-1K and put the files into data/raw/ (see README)
+  activity_log: data/raw/log_standard_4_08_to_4_21_1k.csv     # 08-21.04.2022, used for user activity
+  personalized_log: data/raw/log_standard_4_22_to_5_08_1k.csv # 22.04-08.05.2022, is_rand = 0
+  random_log: data/raw/log_random_4_22_to_5_08_1k.csv         # 22.04-08.05.2022, is_rand = 1
+
+columns:
+  user_id: user_id
+  video_id: video_id
+  play_time_ms: play_time_ms
+  duration_ms: duration_ms
+  tab: tab
+  is_rand: is_rand
+
+analysis:
+  completion_threshold: 0.9     # main definition of a completed view
+  robustness_threshold: 1.0     # robustness check
+  alpha: 0.05                   # one-sided test of beta1 > 0
+  cluster_by: user_id           # clustered standard errors
+
+guardrails:
+  min_obs_per_group: 1000       # observations per group after all filters
+  max_missing_share: 0.01       # per model variable, before complete-case removal
+
+output:
+  dir: outputs
+  log_file: outputs/run.log
