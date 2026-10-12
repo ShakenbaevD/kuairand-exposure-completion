@@ -218,3 +218,26 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Project-specific ---
+# Raw KuaiRand data (large, download separately)
+data/raw/*
+!data/raw/.gitkeep
+
+# Run outputs and logs
+outputs/*
+!outputs/.gitkeep
+*.log
+
+# Large data files, except the tiny samples
+*.csv
+!data/sample/*.csv
+
+# Jupyter and OS junk
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+
+# Virtual environments
+.venv/
+venv/
