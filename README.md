@@ -79,9 +79,11 @@ pip install -r requirements.txt && python src/main.py --config configs/config_sa
 
 Results are written to `outputs/` (`results_*.json` and a log file).
 
-> Note: the sample is tiny and synthetic. The model may show perfect separation and the `model_ok` guardrail will be `False`. This is expected and only verifies that the pipeline runs end to end.
+> Note: the sample is tiny and synthetic. The model shows perfect separation, so the `model_ok` and `robustness_sign` guardrails are `False` and the decision is "do not reject H0". This is expected and only verifies that the pipeline runs end to end.
 
 ### Docker alternative
+
+> Note: the Dockerfile has not been build-tested yet; the pip-based Quickstart above is the verified path.
 
 ```bash
 docker build -t kuairand-exposure .
