@@ -200,7 +200,7 @@ def load_model_summary(results_path="outputs/results_full.json"):
     return {"odds_ratio": m["odds_ratio"], "or_ci95_low": m["or_ci95"][0],
             "or_ci95_high": m["or_ci95"][1], "p_one_sided": m["p_one_sided"],
             "guardrails": r.get("guardrails", {}), "reject_h0": r.get("reject_h0"),
-            "source": results_path}
+            "source": str(results_path)}
 
 
 def _fmt(x, nd=2):
