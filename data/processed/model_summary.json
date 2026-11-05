@@ -1,0 +1,14 @@
+{
+  "odds_ratio": 6.021572475255892,
+  "or_ci95_low": 5.199585950923431,
+  "or_ci95_high": 6.973504316881198,
+  "p_one_sided": 2.5265867416956376e-127,
+  "guardrails": {
+    "min_obs_per_group": true,
+    "missing_share": true,
+    "model_ok": true,
+    "robustness_sign": true
+  },
+  "reject_h0": true,
+  "source": "outputs\\results_full.json"
+}

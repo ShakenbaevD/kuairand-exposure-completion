@@ -1,0 +1,3 @@
+group,n_raw,n_missing,n_invalid,n_clean,invalid_share_pct
+Personalized,6657061,0,527205,6129856,7.919485791102109
+Random (baseline),43028,0,1310,41718,3.044529143813331
