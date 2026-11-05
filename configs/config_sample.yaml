@@ -29,3 +29,11 @@ guardrails:
 output:
   dir: outputs
   log_file: outputs/run_sample.log
+
+processing:
+  seed: 42                 # fixed seed for bootstrap and sampling
+  n_boot: 1000             # bootstrap replicates for 95% CI
+  quantile_sample: 50000   # max rows per group used to bootstrap quantile CIs
+  plot_sample: 20000       # rows per group saved for the boxplot (watch_time_sample.csv)
+  out_dir: outputs/sample_processed
+  figures_dir: outputs/sample_figures
