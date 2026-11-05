@@ -232,12 +232,15 @@ outputs/*
 # Large data files, except the tiny samples
 *.csv
 !data/sample/*.csv
+!data/processed/*.csv
 
 # Jupyter and OS junk
 .ipynb_checkpoints/
+**/.ipynb_checkpoints/
 .DS_Store
 Thumbs.db
 
 # Virtual environments
 .venv/
 venv/
+.venv*/
