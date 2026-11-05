@@ -44,25 +44,36 @@ def save(fig, name, figures_dir):
     fig.savefig(figures_dir / f"{name}.png", dpi=300)
 
 
-def fig1_completion_by_tab(summary):
-    """Completion rate (%) per recommendation scenario with 95% bootstrap CI."""
+MIN_VIEWS = 50  # scenario points with fewer views in a group are not drawn (CI would be meaningless)
+
+
+def fig1_completion_by_tab(summary, min_views=MIN_VIEWS):
+    """Completion rate (%) per recommendation scenario with 95% bootstrap CI.
+
+    Scenarios with fewer than ``min_views`` views in a group are left out, and the
+    line is broken there instead of interpolating over missing data.
+    """
     set_style()
     tabs = summary[summary["scope"] == "tab"]
-    fig, ax = plt.subplots(figsize=(8, 4.8))
+    all_tabs = list(range(15))
+    fig, ax = plt.subplots(figsize=(8, 5.2))
     offsets = {GROUPS[1]: -0.12, GROUPS[0]: 0.12}  # avoid overlapping error bars
     for g in ORDER:
-        d = tabs[tabs["group"] == g].sort_values("tab")
-        if d.empty:
+        d = tabs[tabs["group"] == g].set_index("tab").reindex(all_tabs)
+        d.loc[d["n_views"].fillna(0) < min_views,
+              ["completion_rate_pct", "cr_ci_low_pct", "cr_ci_high_pct"]] = np.nan
+        if d["completion_rate_pct"].isna().all():
             continue
         yerr = np.vstack([d["completion_rate_pct"] - d["cr_ci_low_pct"],
                           d["cr_ci_high_pct"] - d["completion_rate_pct"]])
-        ax.errorbar(d["tab"] + offsets[g], d["completion_rate_pct"], yerr=yerr,
+        ax.errorbar(np.array(all_tabs) + offsets[g], d["completion_rate_pct"], yerr=yerr,
                     color=PALETTE[g], marker=MARKERS[g], linestyle=LINESTYLES[g],
                     capsize=3, linewidth=1.6, markersize=6, label=g)
-    ax.set_xlabel("Recommendation scenario (tab ID, unitless)")
+    ax.set_xlabel(f"Recommendation scenario (tab ID, unitless)\n"
+                  f"Points with fewer than {min_views} views in a group are omitted")
     ax.set_ylabel("Completion rate (% of views)")
     ax.set_ylim(bottom=0)
-    ax.set_xticks(sorted(tabs["tab"].dropna().unique()))
+    ax.set_xticks(all_tabs)
     ax.legend(title="Exposure", frameon=True)
     fig.tight_layout()
     return fig
